@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Payment Success - Receipt</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f8f3fc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .receipt-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 30px 40px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      max-width: 500px;
+      text-align: center;
+      animation: slideUp 0.5s ease;
+    }
+
+    h1 {
+      color: #6b4fbb;
+      font-size: 26px;
+      margin-bottom: 10px;
+    }
+
+    .receipt-info {
+      font-size: 16px;
+      color: #555;
+      margin: 10px 0;
+    }
+
+    .highlight {
+      color: #2e2e7d;
+      font-weight: bold;
+    }
+
+    .download-btn {
+      margin-top: 25px;
+      padding: 12px 20px;
+      font-size: 16px;
+      background-color: #d5c5e5;
+      color: #3f2d61;
+      border: 1px solid #b7a6d3;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .download-btn:hover {
+      background-color: #ece3f9;
+      transform: scale(1.03);
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="receipt-card" id="receipt">
+    <h1>🎉 Payment Successful!</h1>
+    <p class="receipt-info">Thank you for your payment.</p>
+    <p class="receipt-info"><span class="highlight">Payment ID:</span> <span id="paymentId"></span></p>
+    <p class="receipt-info"><span class="highlight">Amount Paid:</span> ₹<span id="amount"></span></p>
+    <p class="receipt-info"><span class="highlight">Payment Mode:</span> Razorpay</p>
+    <button class="download-btn" onclick="downloadReceipt()">📄 Download Receipt</button>
+  </div>
+
+  <script>
+    // Extract query parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const paymentId = urlParams.get('payment_id');
+    const amount = urlParams.get('amount');
+
+    // Display details
+    document.getElementById('paymentId').innerText = paymentId || 'N/A';
+    document.getElementById('amount').innerText = amount || '0.00';
+
+    // Print/Download
+    function downloadReceipt() {
+      window.print();
+    }
+  </script>
+</body>
+</html>
