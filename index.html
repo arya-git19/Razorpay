@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Adalo + Razorpay Dynamic Payment</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 55vh;
+      margin: 0;
+      background-color: #f8f3fc; /* Soft pastel lavender */
+      flex-direction: column;
+      text-align: center;
+    }
+
+    h1 {
+      color: #845ec2; /* Soft pastel purple */
+      font-size: 28px;
+      margin-bottom: 9px;
+    }
+
+    p {
+      font-size: 14px;
+      color: #a084ca; /* Soft lavender */
+      margin-bottom: 20px;
+    }
+
+    button#payButton {
+      padding: 38px88px; /* 2x smaller */
+      font-size: 20px; /* Adjusted font size */
+      background-color: #d5c5e5; /* Soft pastel purple */
+      color: #5a4d78; /* Darker pastel for contrast */
+      border: 2px solid #b7a6d3; /* Light purple border */
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    button#payButton:hover {
+      background-color: #e6dbf5; /* Even softer pastel hover */
+      color: #4b3f60;
+      transform: scale(1.02); /* Slight zoom effect */
+    }
+  </style>
+</head>
+<body>
+
+    <h1>Secure Payment</h1>
+    <p>Click below to proceed with your payment.</p>
+
+    <button id="payButton">Pay Now</button>
+
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const amountParam = urlParams.get('amt');
+      let amountInPaise = 1000; // Default ₹10 (1000 paise)
+
+      if (amountParam) {
+          const numericAmount = parseFloat(amountParam);
+          if (!isNaN(numericAmount)) {
+              amountInPaise = numericAmount * 100; // Convert to paise
+          }
+      }
+
+      // 3) Configure Razorpay Checkout
+      const options = {
+        "key": "rzp_live_FChgiuTiZsjJ1G",  // <-- Put your test or live key here
+        "amount": amountInPaise, 
+        "currency": "INR",
+        "name": "OPDzero by Nucleon Health",
+        "description": "Adalo dynamic payment test",
+     
+    "handler": function (response) {
+        // Show an alert with the payment details
+        alert("Payment Successful!\nPayment ID: " + response.razorpay_payment_id);
+
+        // Generate a receipt (redirect to a thank-you page with receipt details)
+        window.location.href = `receipt.html?payment_id=${response.razorpay_payment_id}&amount=${amountInPaise/100}&status=success`;
+    },
+
+    "theme": {
+      "color": "#b7a6d3"
+    }
+};
+
+      // 4) Attach to button click
+      const payButton = document.getElementById('payButton');
+      payButton.addEventListener('click', () => {
+        const rzp1 = new Razorpay(options);
+        rzp1.open();
+      });
+    </script>
+
+    <!-- Razorpay Checkout script -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</body>
+</html>
