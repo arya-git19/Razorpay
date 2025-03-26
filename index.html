@@ -55,7 +55,7 @@
     <script>
       const urlParams = new URLSearchParams(window.location.search);
       const amountParam = urlParams.get('amt');
-      let amountInPaise = 1000; // Default ₹10 (1000 paise)
+      let amountInPaise = 100; // Default ₹10 (1000 paise)
 
       if (amountParam) {
           const numericAmount = parseFloat(amountParam);
