@@ -77,7 +77,7 @@
         alert("Payment Successful!\nPayment ID: " + response.razorpay_payment_id);
 
         // Generate a receipt (redirect to a thank-you page with receipt details)
-        window.location.href = `receipt.html?payment_id=${response.razorpay_payment_id}&amount=${amountInPaise/100}&status=success`;
+        window.location.href = `Success.html?payment_id=${response.razorpay_payment_id}&amount=${amountInPaise/100}&status=success`;
     },
 
     "theme": {
